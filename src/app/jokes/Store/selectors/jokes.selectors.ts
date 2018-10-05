@@ -1,14 +1,15 @@
-import {createSelector}             from '@ngrx/store';
-import {IJokeEntities, IJokesState} from '../reducers/joke.reducer';
-import {getJokesState}              from '../../../store/selectors/app.selector';
-import {Sort}                       from '@angular/material';
-import {Joke}                       from '../../Models/joke.model';
+import {createSelector} from '@ngrx/store';
+import {IJokesState}    from '../reducers/joke.reducer';
+import {getJokesState}  from '../../../store/selectors/app.selector';
+import {Sort}           from '@angular/material';
+import {Joke}           from '../../Models/joke.model';
+import {Dictionary}     from '@ngrx/entity';
 
 const getJokesLoading  = createSelector(getJokesState, (state: IJokesState) => state.loading);
 const getJokesLoaded   = createSelector(getJokesState, (state: IJokesState) => state.loaded);
 const getJokesFailed   = createSelector(getJokesState, (state: IJokesState) => state.failed);
-const getJokesEntities = createSelector(getJokesState, (state: IJokesState) => state.data);
-const getJokes         = createSelector(getJokesEntities, (entities: IJokeEntities) => Object.keys(entities).map(id => entities[id]));
+const getJokesEntities = createSelector(getJokesState, (state: IJokesState) => state.entities);
+const getJokes         = createSelector(getJokesEntities, (entities: Dictionary<Joke>) => Object.keys(entities).map(id => entities[id]));
 
 const getJokesSorted = createSelector(
   getJokes,

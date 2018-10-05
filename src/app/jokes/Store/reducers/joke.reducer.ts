@@ -1,26 +1,24 @@
-import {Joke}                                                          from '../../Models/joke.model';
-import {ILoadableState, LoadableState}                                 from '../../../Interfaces/LoadableState';
-import {JokeActions, JokeActionsType, JokesLoadFail, JokesLoadSuccess} from '../actions/joke.actions';
+import {Joke}                                           from '../../Models/joke.model';
+import {ILoadableState, LoadableState}                  from '../../../Interfaces/LoadableState';
+import {JokeActions, JokeActionsType, JokesLoadSuccess} from '../actions/joke.actions';
+import {Dictionary, EntityState}                        from '@ngrx/entity';
 
-export interface IJokesState extends ILoadableState {
-  data: IJokeEntities;
+export interface IJokesState extends ILoadableState, EntityState<Joke> {
+
 }
 
-export interface IJokeEntities {
-  [key: number]: Joke;
-}
-
-class JokesState implements IJokesState {
-  data: IJokeEntities;
+class JokesState implements IJokesState, EntityState<Joke> {
   failed: boolean;
   loaded: boolean;
   loading: boolean;
+  entities: Dictionary<Joke>;
+  ids: string[] | number[];
 
-  constructor(data = []) {
-    this.data    = data;
-    this.failed  = false;
-    this.loaded  = false;
-    this.loading = false;
+  constructor(entities = {}) {
+    this.entities = entities;
+    this.failed   = false;
+    this.loaded   = false;
+    this.loading  = false;
   }
 }
 
@@ -34,23 +32,24 @@ function loadActionHandler(state: JokesState): JokesState {
 }
 
 function loadSuccessActionHandler(state: JokesState, action: JokesLoadSuccess): JokesState {
-  const entities: IJokeEntities = action.payload.reduce(
-    (intities: IJokeEntities, joke: Joke) => {
+  const entities: Dictionary<Joke> = action.payload.reduce(
+    (intities: Dictionary<Joke>, joke: Joke) => {
       return {
         ...intities,
         [joke.id]: joke
       };
-    }, {...state.data}
+    }, {...state.entities}
   );
 
   return {
     ...state,
     ...LoadableState.Success,
-    data: entities
+    entities: entities,
+    ids     : Object.keys(entities)
   };
 }
 
-function loadFailActionHandler(state: JokesState, action: JokesLoadFail): JokesState {
+function loadFailActionHandler(state: JokesState): JokesState {
   return {
     ...state,
     ...LoadableState.Fail,
@@ -67,7 +66,7 @@ function JokesReducer(state: JokesState = JokesInitialState, action: JokeActions
       return loadSuccessActionHandler(state, action as JokesLoadSuccess);
     }
     case JokeActions.JOKES_LOAD_FAIL: {
-      return loadFailActionHandler(state, action as JokesLoadFail);
+      return loadFailActionHandler(state);
     }
   }
 
