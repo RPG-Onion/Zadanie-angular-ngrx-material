@@ -1,0 +1,28 @@
+<div class="table-responsive">
+  <table
+    (matSortChange)="sortList($event)" [dataSource]="(Jokes)"
+    class="mat-elevation-z8"
+    mat-table matSort
+  >
+
+    <ng-container matColumnDef="id">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="id"> Id</th>
+      <td *matCellDef="let element" mat-cell> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="type"> type</th>
+      <td *matCellDef="let element" mat-cell> {{element.type}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="setup">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="setup"> Setup</th>
+      <td *matCellDef="let element" mat-cell style="min-width: 320px;"> {{element.setup}} </td>
+    </ng-container>
+
+
+    <tr *matHeaderRowDef="tableCollumns" mat-header-row></tr>
+    <tr (click)="BaDumTss(row)" *matRowDef="let row; columns: tableCollumns;" mat-row></tr>
+  </table>
+
+</div>
