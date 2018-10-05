@@ -1,4 +1,4 @@
 import {createSelector} from '@ngrx/store';
-import {IAppState}      from '../reducers';
+import {IJokesStore}    from '../../jokes/Store/reducers/joke.reducer';
 
-export const getJokesState = createSelector((state: IAppState) => state.jokes);
+export const getJokesState = createSelector((state: IJokesStore) => state.jokes);

@@ -3,8 +3,10 @@ import {ILoadableState, LoadableState}                  from '../../../Interface
 import {JokeActions, JokeActionsType, JokesLoadSuccess} from '../actions/joke.actions';
 import {Dictionary, EntityState}                        from '@ngrx/entity';
 
-export interface IJokesState extends ILoadableState, EntityState<Joke> {
+export interface IJokesState extends ILoadableState, EntityState<Joke> {}
 
+export interface IJokesStore {
+  jokes: IJokesState;
 }
 
 class JokesState implements IJokesState, EntityState<Joke> {

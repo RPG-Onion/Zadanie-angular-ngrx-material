@@ -9,8 +9,7 @@ import {PunchlineDialogComponent} from '../punchline-dialog/punchline-dialog.com
 
 @Component({
   selector   : 'app-jokes-list',
-  templateUrl: './jokes-list.component.html',
-  styleUrls  : ['./jokes-list.component.sass']
+  templateUrl: './jokes-list.component.html'
 })
 export class JokesListComponent implements OnInit {
   public Jokes: Joke[];

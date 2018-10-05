@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div *ngIf="Jokes.length; else jokesLoader" class="table-responsive">
   <table
     (matSortChange)="sortList($event)" [dataSource]="(Jokes)"
     class="mat-elevation-z8"
@@ -26,3 +26,6 @@
   </table>
 
 </div>
+<ng-template #jokesLoader>
+  <mat-progress-spinner style="margin:0 auto;" mode="indeterminate"></mat-progress-spinner>
+</ng-template>

@@ -1,9 +1,9 @@
 import {ActionReducerMap}          from '@ngrx/store';
-import {IJokesState, JokesReducer} from '../jokes/Store/reducers/joke.reducer';
+import {IJokesStore, JokesReducer} from '../jokes/Store/reducers/joke.reducer';
 import {JokesEffects}              from '../jokes/Store/effects/jokes.effect';
 
-interface IAppState {
-  jokes: IJokesState;
+interface IAppState extends IJokesStore {
+
 }
 
 const Reducers: ActionReducerMap<IAppState> = {
